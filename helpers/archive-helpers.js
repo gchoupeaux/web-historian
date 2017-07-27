@@ -27,7 +27,7 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
-  fs.readFile(list, function(err, data) {
+  fs.readFile(exports.paths.list, function(err, data) {
     var str = '';
     
     str += data;
@@ -37,7 +37,7 @@ exports.readListOfUrls = function(callback) {
 };
 
 exports.isUrlInList = function(url, callback) {
-  fs.readFile(list, function(err, data) {
+  fs.readFile(exports.paths.list, function(err, data) {
     var str = '';
     str += data;    
     var arr = str.split('\n');
@@ -51,12 +51,14 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  fs.appendFileSync(list, url + '\n');  
+  fs.appendFileSync(exports.paths.list, url + '\n');  
   callback();   
 };
 
 exports.isUrlArchived = function(url, callback) {  
-  var files = fs.readdirSync(archivedSites);
+  
+
+  var files = fs.readdirSync(exports.paths.archivedSites);
   
   if (files.indexOf(url) !== -1) {
     callback(true);
@@ -86,7 +88,7 @@ exports.downloadUrls = function(urls) {
         var content = ''; 
         content += chunk;
         //console.log('inside res', options.host);
-        fs.writeFileSync((archivedSites + options.host), content); 
+        fs.writeFileSync((exports.paths.archivedSites + options.host), content); 
         //console.log('Got response: ' + content);
       });
       
