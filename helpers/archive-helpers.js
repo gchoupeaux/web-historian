@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 var http = require('http');
-
+var request = require('request');
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
  * Consider using the `paths` object below to store frequently used file paths. This way,
@@ -70,32 +70,39 @@ exports.isUrlArchived = function(url, callback) {
 exports.downloadUrls = function(urls) {
   // should download all pending urls in the list
   //readListOfUrls(function(arrList) {
-  console.log('List of sites: ', urls);
-  urls.forEach(function(url) {
+  // console.log('List of sites: ', urls);
+  // urls.forEach(function(url) {
 
-    //console.log('loop', urls[i]);
-    var options = {
-      host: url,
-      port: 80,
-      path: '/index.html'
-    };
+  //   //console.log('loop', urls[i]);
+  //   var options = {
+  //     host: url,
+  //     port: 80,
+  //     method: 'GET',
+  //     path: '/index.hml'
+  //   };
     
-    //var context = this;
-    //console.log('inside loop', urls[i]);   
-    http.get(options, (res) => {
-      //console.log('inside get', options.host);   
-      console.log(`Download: ${options.host} res: ${res.statusCode} ${res.statusMessage}`);     
-      res.on('data', (chunk) => {
-        var content = ''; 
-        content += chunk;
-        console.log(`Download: ${options.host} content: ${content}`);
-        //console.log('inside res', options.host);
-        fs.writeFileSync((exports.paths.archivedSites + '/' + options.host), content); 
-        //console.log('Got response: ' + content);
-      });
-    }).on('error', function (error) {
-      console.log(error);
-    });
+  //   //var context = this;
+  //   //console.log('inside loop', urls[i]);   
+  //   http.get(options, (res) => {
+  //     //console.log('inside get', options.host);   
+  //     console.log(`Download: ${options.host} res: ${res.statusCode} ${res.statusMessage}`);     
+  //     res.on('data', (chunk) => {
+  //       var content = ''; 
+  //       content += chunk;
+  //       console.log(`Download: ${options.host} content: ${content}`);
+  //       //console.log('inside res', options.host);
+  //       fs.writeFileSync((exports.paths.archivedSites + '/' + options.host), content); 
+  //       //console.log('Got response: ' + content);
+  //     });
+  //   }).on('error', function (error) {
+  //     console.log(error);
+  //   });
+  // })
+  urls.forEach(function (url) {
+    if (!url) {
+      return;
+    } 
+    request('http://' + url).pipe(fs.createWriteStream(exports.paths.archivedSites + '/' + url));
   });
   //});
 };
