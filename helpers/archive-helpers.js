@@ -26,16 +26,68 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
+  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
+  fs.readFile(dir, function(err, data) {
+    var str = '';
+    
+    str += data;
+    var arr = str.split('\n');
+    callback(arr);
+  });
 };
 
 exports.isUrlInList = function(url, callback) {
+  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
+  fs.readFile(dir, function(err, data) {
+    var str = '';
+    str += data;    
+    var arr = str.split('\n');
+    if (arr.indexOf(url) === -1) {
+      callback(false);
+    } else {
+      callback(true);
+    }
+    
+  });
 };
 
 exports.addUrlToList = function(url, callback) {
+  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
+  fs.appendFileSync(dir, url + '\n');  
+  callback();   
 };
 
 exports.isUrlArchived = function(url, callback) {
+  var dir = path.join(__dirname, '../test/testdata/sites');   
+  var files = fs.readdirSync(dir);
+  
+  if (files.indexOf(url) !== -1) {
+    callback(true);
+  } else {
+    callback(false);  
+  }
+
+
 };
 
 exports.downloadUrls = function(urls) {
+
+  // should download all pending urls in the list
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
