@@ -27,8 +27,7 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
-  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
-  fs.readFile(dir, function(err, data) {
+  fs.readFile(list, function(err, data) {
     var str = '';
     
     str += data;
@@ -38,8 +37,7 @@ exports.readListOfUrls = function(callback) {
 };
 
 exports.isUrlInList = function(url, callback) {
-  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
-  fs.readFile(dir, function(err, data) {
+  fs.readFile(list, function(err, data) {
     var str = '';
     str += data;    
     var arr = str.split('\n');
@@ -53,14 +51,12 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
-  var dir = path.join(__dirname, '../test/testdata/sites.txt'); 
-  fs.appendFileSync(dir, url + '\n');  
+  fs.appendFileSync(list, url + '\n');  
   callback();   
 };
 
-exports.isUrlArchived = function(url, callback) {
-  var dir = path.join(__dirname, '../test/testdata/sites');   
-  var files = fs.readdirSync(dir);
+exports.isUrlArchived = function(url, callback) {  
+  var files = fs.readdirSync(archivedSites);
   
   if (files.indexOf(url) !== -1) {
     callback(true);
@@ -90,7 +86,7 @@ exports.downloadUrls = function(urls) {
         var content = ''; 
         content += chunk;
         //console.log('inside res', options.host);
-        fs.writeFileSync(path.join(__dirname, '../test/testdata/sites/' + options.host), content); 
+        fs.writeFileSync((archivedSites + options.host), content); 
         //console.log('Got response: ' + content);
       });
       

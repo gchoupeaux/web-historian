@@ -32,7 +32,7 @@ exports.handleRequest = function (req, res) {
       body += data;
       body = body.slice(4) + '\n';
       
-      fs.appendFile(path.join(__dirname, '../test/testdata/sites.txt'), body, function (err) {
+      fs.appendFile(path.join(__dirname, '../archives/sites.txt'), body, function (err) {
         if (err) {
           throw err;
         }
@@ -50,51 +50,4 @@ exports.handleRequest = function (req, res) {
     res.end('');
   } 
 
-
-  
-
-  // should append submitted sites to 'sites.txt'
-
-  // //res.end(archive.paths.siteAssets + '/index.html');
-  // if (req.method === 'GET') {
-  //   console.log('received a GET');
-  //   //statusCode = 200;
-  // }
-
-
-  // res.writeHead(statusCode, headers);
-  // res.end(JSON.stringify(result));
-
-
-  //res.end(archive.paths.list);
-  //res.end('/<input/');
 };
-
-
-
-// var actions = {
-//   'GET': function(request, response) {
-//     utils.sendResponse(response, {results: messages});
-//   },
-//   'POST': function(request, response) {
-//     utils.collectData(request, function(message) {
-//       message.objectId = ++objectIdCounter;
-//       messages.push(message);
-//       utils.sendResponse(response, {objectId: message.objectId}, 201);
-//     });
-//   },
-//   'OPTIONS': function(request, response) {
-//     utils.sendResponse(response, null);
-//   }
-// };
-
-
-// exports.collectData = function(request, callback) {
-//   var data = '';
-//   request.on('data', function(chunk) {
-//     data += chunk;
-//   });
-//   request.on('end', function() {
-//     callback(JSON.parse(data));
-//   });
-// };

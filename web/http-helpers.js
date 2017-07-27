@@ -18,10 +18,7 @@ exports.serveAssets = function(res, asset, callback) {
   fs.readFile(asset, function(err, data) {
     var str = '';
     str += data;  
-  // if (str) {
     callback(str);
-  // }
-  
   });
 
   
@@ -29,17 +26,6 @@ exports.serveAssets = function(res, asset, callback) {
 
 
 };
-
-// exports.collectData = function(request, callback) {
-//   var data = '';
-//   request.on('data', function(chunk) {
-//     data += chunk;
-//   });
-//   request.on('end', function() {
-//     callback(JSON.parse(data));
-//   });
-// };
-
 
 
 // As you progress, keep thinking about what helper functions you can put here!
