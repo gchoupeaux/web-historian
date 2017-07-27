@@ -83,15 +83,18 @@ exports.downloadUrls = function(urls) {
     //var context = this;
     //console.log('inside loop', urls[i]);   
     http.get(options, (res) => {
-      //console.log('inside get', options.host);        
+      //console.log('inside get', options.host);   
+      console.log(`Download: ${options.host} res: ${res.statusCode} ${res.statusMessage}`);     
       res.on('data', (chunk) => {
         var content = ''; 
         content += chunk;
+        console.log(`Download: ${options.host} content: ${content}`);
         //console.log('inside res', options.host);
-        fs.writeFileSync((exports.paths.archivedSites + options.host), content); 
+        fs.writeFileSync((exports.paths.archivedSites + '/' + options.host), content); 
         //console.log('Got response: ' + content);
       });
-      
+    }).on('error', function (error) {
+      console.log(error);
     });
   });
   //});
